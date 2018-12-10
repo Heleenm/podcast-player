@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import axios from "axios";
+import Header from './components/Header/Header';
 import EpisodesList from './components/EpisodesList/EpisodesList';
 import Player from './components/Player/Player';
 import './App.css';
@@ -23,7 +24,6 @@ class App extends Component {
     const self = this;
     axios.get('http://localhost:1337/episodes')
       .then(function (response) {
-        console.log(response);
         self.setState({ episodes: response.data, currentEpisode: response.data[0] });
 
       })
@@ -50,7 +50,9 @@ class App extends Component {
   render() {
     return (
       <div className="App">
+        <Header />
         <main className="podcast">
+          <h1>Title Podcast</h1>
           <Player episode={this.state.currentEpisode} />
           <EpisodesList
             error={this.state.error}

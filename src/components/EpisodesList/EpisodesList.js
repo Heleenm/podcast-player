@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-
+import './epsiodelist.css'
 
 class EpisodesList extends Component {
 
@@ -33,8 +33,8 @@ class EpisodesList extends Component {
 
   render() {
     return (
-      <section className="episodes">
-        <h3>Episodes:</h3>
+      <section className="section-wrapper episodes">
+        <h2>Episodes:</h2>
         { this.props.error === false && typeof this.props.episodes !== 'undefined' ?
         <ul>
           { this.createEpisodeList(this.props.episodes) }

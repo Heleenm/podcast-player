@@ -1,0 +1,34 @@
+.player {
+  background-color: #fff;
+}
+
+.player-episode-marker {
+  height: 100px;
+}
+
+.player-episode-marker img {
+  margin: 0 auto;
+  height: 100px;
+}
+
+.player-episode-audio-controls {
+  vertical-align: bottom;
+}
+
+.scrub-bar {
+  margin: 0 auto;
+  width: 80%;
+  height: 50px;
+}
+
+.scrub-bar-slider {
+  width: 100%;
+  height: 50px;
+  cursor: pointer;
+}
+
+.audio-control-buttons button {
+  margin: 0 5px 0;
+  height: 50px;
+  background-color: #dbe9d8;
+}

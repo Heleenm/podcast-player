@@ -1,0 +1,14 @@
+.episodes {
+  height: 100vh;
+  background-color: #dbe9d8;
+}
+.episodes ul {
+  padding: 0;
+  text-align: left;
+  list-style-type: none;
+}
+
+.episodes button {
+  margin-bottom: 15px;
+  width: 100%;
+}
