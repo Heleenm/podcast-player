@@ -5,7 +5,7 @@ import EpisodesList from './components/EpisodesList/EpisodesList';
 import Player from './components/Player/Player';
 import './App.css';
 
-//ToDo: create global variable for server url
+//ToDo: create variable for server url
 
 
 class App extends Component {
