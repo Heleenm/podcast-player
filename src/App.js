@@ -1,19 +1,63 @@
 import React, { Component } from 'react';
+import axios from "axios";
 import EpisodesList from './components/EpisodesList/EpisodesList';
 import Player from './components/Player/Player';
 import './App.css';
 
-class App extends Component {
+//ToDo: create global variable for server url
 
-  handleEpisodeSelection(episodeData) {
-    console.log('epsiode in app.js', episodeData);
+
+class App extends Component {
+  constructor() {
+    super();
+    this.state = {
+      error: false,
+    };
+    this.getEpisodes();
   }
+
+  /**
+   * Get episodes from server and set state accordingly.
+   */
+  getEpisodes() {
+    const self = this;
+    axios.get('http://localhost:1337/episodes')
+      .then(function (response) {
+        console.log(response);
+        self.setState({ episodes: response.data, currentEpisode: response.data[0] });
+
+      })
+      .catch(function (error) {
+        console.log(error);
+        self.setState({ errorMessage: 'currently unavailable', error: true });
+      });
+  }
+
+  /**
+   * Update currentEpisode if user selects different episode
+   * ToDo: think about whether I should get the episode from the single episode endpoint instead..
+   * @param episodeIndex
+   */
+  handleEpisodeSelection(episodeIndex) {
+    const selectedEpisode = this.state.episodes[episodeIndex];
+    this.setState((prevState) => {
+      if(prevState.currentEpisode.id !== selectedEpisode.id){
+        return { currentEpisode: selectedEpisode } ;
+      }
+    });
+  }
+
   render() {
     return (
       <div className="App">
         <main className="podcast">
-          <Player />
-          <EpisodesList episodeClick={ (episodeData) => this.handleEpisodeSelection(episodeData) } />
+          <Player episode={this.state.currentEpisode} />
+          <EpisodesList
+            error={this.state.error}
+            errorMessage={this.state.errorMessage}
+            episodes={this.state.episodes}
+            episodeClick={ (episodeIndex) => this.handleEpisodeSelection(episodeIndex) }
+          />
         </main>
 
       </div>

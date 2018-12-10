@@ -1,32 +1,7 @@
 import React, {Component} from 'react';
-import axios from 'axios';
+
 
 class EpisodesList extends Component {
-  constructor() {
-    super();
-    this.state = {
-      error: false,
-    };
-    this.getEpisodes();
-  }
-
-  /**
-   * Get episodes from server and set state accordingly.
-   * ToDo: move to app.js in order to select first episode by default and only fetch episodes once..
-   */
-  getEpisodes() {
-   const self = this;
-    axios.get('http://localhost:1337/episodes')
-      .then(function (response) {
-        console.log(response);
-        self.setState({ episodes: response.data });
-
-      })
-      .catch(function (error) {
-        console.log(error);
-        self.setState({ errorMessage: 'currently unavailable', error: true });
-      });
-  }
 
   /**
    * Create the episode list items
@@ -35,10 +10,10 @@ class EpisodesList extends Component {
    */
   createEpisodeList(episodes) {
     const list = [];
-    episodes.map(item =>
+    episodes.map((item, index) =>
       list.push(
         <li key={item.id}>
-          <button onClick={ () => this.episodeClickHandler(item) }>{ item.name }</button>
+          <button onClick={ () => this.episodeClickHandler(index) }>{ item.name }</button>
         </li>
       )
     );
@@ -46,13 +21,12 @@ class EpisodesList extends Component {
   }
 
   /**
-   * Handle the episode button click.
-   * @param episodeData
+   * Handle episode button click
+   * @param episodeIndex
    */
-  episodeClickHandler(episodeData) {
+  episodeClickHandler(episodeIndex) {
     if(typeof this.props.episodeClick === 'function') {
-      console.log('yup', episodeData);
-      this.props.episodeClick(episodeData);
+      this.props.episodeClick(episodeIndex);
     }
   }
 
@@ -60,12 +34,13 @@ class EpisodesList extends Component {
   render() {
     return (
       <section className="episodes">
-        { this.state.error === false && typeof this.state.episodes !== 'undefined' ?
+        <h3>Episodes:</h3>
+        { this.props.error === false && typeof this.props.episodes !== 'undefined' ?
         <ul>
-          { this.createEpisodeList(this.state.episodes) }
+          { this.createEpisodeList(this.props.episodes) }
         </ul>
           :
-          <p>{ this.state.errorMessage }</p>
+          <p>{ this.props.errorMessage }</p>
         }
       </section>
     );
